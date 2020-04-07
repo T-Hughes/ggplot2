@@ -185,6 +185,30 @@ gapminder %>%
 
 #ggplot(<DATA>, AESTHETIC MAPPINGS>) + <GEOM> + <GEOM> + <SCALES> + <FACETS>
 
+#13:
+gapminder %>% 
+  ggplot(aes(x = pop, fill = continent)) + 
+  geom_density(alpha = 0.5) +
+  facet_wrap(~year) +
+  scale_x_log10()
 
+#14:
+install.packages("agridat")
+library(agridat)
+b_wheat <- blackman.wheat
 
+b_wheat %>% 
+  ggplot(aes (x = nitro, y = yield, colour = gen )) +
+  geom_point() +
+  facet_wrap(~loc)
 
+b_wheat %>% 
+  ggplot(aes (x = gen, y = yield, colour = nitro )) +
+  geom_point() +
+  facet_wrap(~loc)
+
+#my favorite
+b_wheat %>% 
+  ggplot(aes (x = loc, y = yield, colour = gen )) +
+  geom_point() +
+  facet_wrap(~nitro)
