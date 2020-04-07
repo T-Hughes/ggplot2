@@ -68,5 +68,114 @@ gapminder %>%
   ggplot(mapping = aes(x = year, y = lifeExp, shape = continent, size = pop)) + 
   geom_point()
 
+ggplot(data = gapminder,        mapping = aes(x=lifeExp, y=year, colour=continent)
+) + geom_point(alpha = .2)  #from Jose
+
+gapminder %>% 
+  group_by(continent, year) %>% 
+  summarise(mean_lifeExp=mean(lifeExp)) %>% 
+  ggplot(aes(x=year, y=mean_lifeExp, colour=continent))+ 
+  geom_point()# from Yuwan
+
+#from Stephen per country
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent, group = country)) + 
+  geom_line()
+
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent, group = country)) + 
+  geom_line() +
+  geom_point()
+
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent, group = country)) + 
+    geom_point() +
+geom_line()
+
+# black dots, coloured lines
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent, group = country)) + 
+  geom_line() +
+  geom_point(colour = 'black')
+
+# swap layers around
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent, group = country)) + 
+  geom_point(colour = 'black') +
+  geom_line()
+
+# black dots, coloured lines, dealing with overplot
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent, group = country)) + 
+  geom_line() +
+  geom_point(colour = 'black', alpha = 0.3)
+
+# or in geom function, not in plot as a whole
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, group = country)) + 
+  geom_line(mapping = aes(colour = continent)) +
+  geom_point(alpha = 0.3)
+
+#plotting extra line over scatterplot and changing colour outside aes
+gapminder %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(alpha = 0.5, colour = 'blue') +
+  scale_x_log10() +
+  geom_smooth(method = "lm", size = 2, colour = 'red')
+
+#plotting extra line over scatterplot and changing colour inside aes
+gapminder %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp, colour = continent)) +
+  geom_point(alpha = 0.5) +
+  scale_x_log10() +
+  geom_smooth(method = "lm", size = 2)
+
+#extra geom smooth with no colout by continent
+gapminder %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp)) +
+  geom_point(mapping = aes(colour = continent), size = 2) +
+  scale_x_log10() +
+  geom_smooth(mapping = aes(colour = continent), method = "lm", size = 2) +
+  geom_smooth(method = "lm")   
+#scales
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent)) +
+  geom_point() +
+  scale_colour_manual(values = c("red", "green", "blue", "purple", "black"))
+
+#colours available
+colours()
+scale_colour_brewer()
+
+?scale_colour_brewer()
+
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent)) +
+  geom_point() +
+  scale_colour_brewer(palette = "Greens")
+
+gapminder %>% 
+  ggplot(aes(x = year, y = lifeExp, colour = continent)) +
+  geom_point() +
+  scale_colour_brewer(palette = "Dark2")
+
+# Separating plots
+a_countries <- filter(gapminder, str_starts(country, "A"))
+
+# per country in facet wrap
+ggplot(a_countries, aes(x = year, y = lifeExp, colour = continent, group = country)) +
+  geom_line() +
+  facet_wrap(~country)
+
+#per year facet wrapped
+gapminder %>% 
+  ggplot(aes(x = gdpPercap, y = lifeExp, colour = continent, size = pop)) +
+  geom_point() +
+  scale_x_log10() +
+  facet_wrap(~year)
+
+#ggplot(<DATA>, AESTHETIC MAPPINGS>) + <GEOM> + <GEOM> + <SCALES> + <FACETS>
+
+
 
 
