@@ -216,19 +216,21 @@ b_wheat %>%
 #______________________________________________
 #day12
 
-
+# store the plots into the environment so it can be polished
+# more and more till it is the way you want to save it
 roughplot <- ggplot(a_countries, aes(x = year, y = lifeExp, colour = continent)) +
   geom_line() +
   facet_wrap(~country)
 
+#change title and name axis
 roughplot +
   labs(title = "Figure 1", 
        x = "Year", 
        y = "Life Expectancy",
        colour = "Continent")
 
-#change source include gapminder data and change title (I did subtitle,
-# KM did caption)
+#change source include gapminder data and change title
+#(I did subtitle, KM did caption)
 roughplot +
   labs(title = "Growth in life expectancy for 'A' countries", 
        x = "Year", 
@@ -236,6 +238,7 @@ roughplot +
        colour = "Continent",
        subtitle = "source: Gapminder Data")
 
+#caption
 roughplot +
   labs(title = "Growth in life expectancy for 'A' countries", 
        x = "Year", 
@@ -243,6 +246,7 @@ roughplot +
        colour = "Continent",
        caption = "source: gapminder data")
 
+# added theme
 roughplot +
   labs(title = "Growth in life expectancy for 'A' countries", 
        x = "Year", 
@@ -254,6 +258,7 @@ roughplot +
     panel.grid.minor = element_blank(),
     plot.title = element_text(face = "bold")
   )
+
 #challenge applying theme
 roughplot +
   labs(title = "Growth in life expectancy for 'A' countries", 
@@ -272,6 +277,7 @@ theme(
 #check out theme options
 ?theme
 
+# different theme options
 lifeExp_plot <- roughplot +
   labs(title = "Growth in life expectancy for 'A' countries", 
        x = "Year", 
