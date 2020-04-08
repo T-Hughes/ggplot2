@@ -212,3 +212,116 @@ b_wheat %>%
   ggplot(aes (x = loc, y = yield, colour = gen )) +
   geom_point() +
   facet_wrap(~nitro)
+
+#______________________________________________
+#day12
+
+
+roughplot <- ggplot(a_countries, aes(x = year, y = lifeExp, colour = continent)) +
+  geom_line() +
+  facet_wrap(~country)
+
+roughplot +
+  labs(title = "Figure 1", 
+       x = "Year", 
+       y = "Life Expectancy",
+       colour = "Continent")
+
+#change source include gapminder data and change title (I did subtitle,
+# KM did caption)
+roughplot +
+  labs(title = "Growth in life expectancy for 'A' countries", 
+       x = "Year", 
+       y = "Life Expectancy",
+       colour = "Continent",
+       subtitle = "source: Gapminder Data")
+
+roughplot +
+  labs(title = "Growth in life expectancy for 'A' countries", 
+       x = "Year", 
+       y = "Life Expectancy",
+       colour = "Continent",
+       caption = "source: gapminder data")
+
+roughplot +
+  labs(title = "Growth in life expectancy for 'A' countries", 
+       x = "Year", 
+       y = "Life Expectancy",
+       colour = "Continent",
+       caption = "source: gapminder data") + 
+  theme_bw() +
+  theme(
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold")
+  )
+#challenge applying theme
+roughplot +
+  labs(title = "Growth in life expectancy for 'A' countries", 
+       x = "Year", 
+       y = "Life Expectancy",
+       colour = "Continent",
+       caption = "source: gapminder data") + 
+  theme_bw() + 
+theme(
+    strip.background = element_blank(),
+    panel.grid.major = element_line(size = 1),
+    axis.title  = element_text(size  = 10, colour = "blue"),
+    legend.position = "bottom"
+  )
+
+#check out theme options
+?theme
+
+lifeExp_plot <- roughplot +
+  labs(title = "Growth in life expectancy for 'A' countries", 
+       x = "Year", 
+       y = "Life Expectancy",
+       colour = "Continent",
+       caption = "source: gapminder data") + 
+  theme_bw() + 
+  theme(
+    strip.background = element_blank(),
+    panel.grid.major = element_line(size = 1),
+    axis.title  = element_text(size  = 10, colour = "blue"),
+    legend.position = "bottom"
+  )
+
+#saving files
+ggsave(filename = "results/lifeExp.png" , 
+       plot = lifeExp_plot,
+       width = 12, height = 10, dpi = 300, units = "cm")
+
+ggsave(filename = "results/lifeExp2.png" , 
+       plot = lifeExp_plot,
+       width = 5, height = 20, dpi = 300, units = "cm")
+    
+ggsave(filename = "results/lifeExp3.png" , 
+       plot = lifeExp_plot,
+       width = 20, height = 20, dpi = 300, units = "cm")
+
+#cowplot
+install.packages("cowplot")
+library(cowplot)
+
+plot1 <- ggplot(gapminder, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+plot2 <- ggplot(gapminder, aes(x = continent, y = lifeExp)) +
+  geom_boxplot()
+plot3 <- ggplot(gapminder, aes(x = gdpPercap, y = pop)) +
+  geom_point()
+plot4 <- ggplot(gapminder, aes(x = lifeExp, y = pop)) +
+  geom_point()
+
+plot_grid(plot1, plot2, plot3, plot4)
+ 
+#relative to each other 
+plot_grid(plot1, plot2, plot3, plot4, rel_heights = c(1,3),
+          rel_widths = c(4,1))
+
+#labels in capitals
+plot_grid(plot1, plot2, plot3, plot4, labels = "AUTO")    
+
+#labels in regular
+plot_grid(plot1, plot2, plot3, plot4, labels = "auto")
+
+
